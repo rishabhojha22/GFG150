@@ -1,0 +1,84 @@
+// BruteForce
+class Solution {
+    ArrayList<Integer> search(String pat, String txt) {
+        // code here
+        ArrayList<Integer>ans=new ArrayList<>();
+        int n1=pat.length();
+        int n2=txt.length();
+        
+        for(int i=0;i<=n2-n1;i++){
+            String curr=txt.substring(i,i+n1);
+            if(curr.equals(pat)){
+                ans.add(i);
+            }
+        }
+        
+        return ans;
+    }
+}
+
+
+// Optimized
+class Solution {
+    ArrayList<Integer> search(String pat, String txt) {
+        // code here
+        ArrayList<Integer>ans=new ArrayList<>();
+        int n1=pat.length();
+        int n2=txt.length();
+        
+        int lps[]=new int[n1];
+         
+        int pre=0;
+        int suf=1;
+        
+        //build LPS
+        while(suf<n1){
+            //match
+            if(pat.charAt(pre)==pat.charAt(suf)){
+                lps[suf]=pre+1;
+                suf++;
+                pre++;
+            }
+            
+            // Not Matched
+            else{
+                if(pre==0){
+                    lps[suf]=0;
+                    suf++;
+                }
+                else{
+                    pre=lps[pre-1];
+                }
+            }
+        }
+        
+        int p=0; // pattern pointer
+        int t=0; // text pointer
+         
+        while(t<n2){
+            //match
+            if(pat.charAt(p)==txt.charAt(t)){
+                p++;
+                t++;
+            }
+            
+            //Not match
+            else{
+                if(p==0){
+                    t++;
+                }
+                else{
+                    p=lps[p-1];
+                }
+            }
+            
+            // if full pattern matched
+            if(p==n1){
+                ans.add(t-p);
+                p=lps[p-1]; // continue matching
+            }
+        }
+        
+        return ans;
+    }
+}
