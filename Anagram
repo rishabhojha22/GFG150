@@ -1,0 +1,22 @@
+class Solution {
+    public static boolean areAnagrams(String s1, String s2) {
+        // code here
+        int arr[]= new int[26];
+        int n1=s1.length();
+        
+        for(int i=0;i<n1;i++){
+            int idx=s1.charAt(i)-'a';
+            arr[idx]++;
+        }
+        
+        int n2=s2.length();
+        
+        for(int i=0;i<n2;i++){
+            int idx=s2.charAt(i)-'a';
+            arr[idx]--;
+            if(arr[idx]<0)return false;
+        }
+        
+        return true;
+    }
+}
