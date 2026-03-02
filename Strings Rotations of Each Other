@@ -13,3 +13,57 @@ class Solution {
 
 
 //Method 2
+class Solution {
+    public boolean areRotations(String s1, String s2) {
+         String txt=s1+s1;
+         String pat=s2;
+         
+         int pre=0;
+         int suf=1;
+         
+         int lps[]=new int[pat.length()];
+         
+         // lps creation
+         while(suf<pat.length()){
+             if(pat.charAt(pre)==pat.charAt(suf)){
+                 lps[suf]=pre+1;
+                 pre++;
+                 suf++;
+             }
+             else{
+                 if(pre==0){
+                     lps[suf]=0;
+                     suf++;
+                 }
+                 else{
+                     pre=lps[pre-1];
+                 }
+             }
+         }
+         
+         // pattern serach
+         int p=0;
+         int t=0;
+         
+         while(t<txt.length()){
+             if(txt.charAt(t)==pat.charAt(p)){
+                 p++;
+                 t++;
+             }
+             else{
+                 if(p==0){
+                     t++;
+                 }
+                 else{
+                     p=lps[p-1];
+                 }
+             }
+             
+             if(p==pat.length()){
+                 return true;
+             }
+         }
+         
+         return false;
+    }
+}
