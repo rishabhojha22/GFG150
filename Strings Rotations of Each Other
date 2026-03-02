@@ -1,0 +1,15 @@
+// Method 1  O(n) but can give TLE
+class Solution {
+    public boolean areRotations(String s1, String s2) {
+        // code here
+        if(s1.length()!=s2.length())return false;
+        
+        String s3=s2+s2;
+        
+        if(s3.contains(s1))return true;
+        return false;
+    }
+}
+
+
+//Method 2
